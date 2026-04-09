@@ -2,6 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { supabase } from "@/lib/supabase";
+import BuyNowButton from "@/components/BuyNowButton";
+
+export const dynamic = "force-dynamic";
 
 type Item = {
   id: string;
@@ -20,21 +23,23 @@ type Item = {
   status: string;
   featured: boolean;
   image_url: string | null;
+  seller_payment_ready: boolean | null;
 };
 
 async function getItem(slug: string): Promise<Item | null> {
-  const { data, error } = await supabase
+  const { data: item, error } = await supabase
     .from("items")
     .select("*")
     .eq("slug", slug)
-    .single();
+    .eq("approval_status", "approved")
+    .maybeSingle();
 
   if (error) {
     console.error("Supabase item fetch error:", error);
     return null;
   }
 
-  return data;
+  return item;
 }
 
 export default async function ShopItemPage({
@@ -48,6 +53,10 @@ export default async function ShopItemPage({
   if (!item) {
     notFound();
   }
+
+  const sellerReady = !!item.seller_payment_ready;
+  const isSold = item.status === "sold";
+  const isAvailable = item.status === "available";
 
   const statusStyles =
     item.status === "available"
@@ -116,6 +125,20 @@ export default async function ShopItemPage({
                 {item.description || "No description available yet."}
               </p>
 
+              <div className="mt-8">
+                {isSold ? (
+                  <div className="rounded-2xl border border-slate-400/20 bg-slate-500/10 px-6 py-4 text-slate-200">
+                    This item has been sold.
+                  </div>
+                ) : isAvailable && sellerReady ? (
+                  <BuyNowButton itemId={item.id} sellerReady={true} />
+                ) : (
+                  <div className="rounded-2xl border border-amber-400/20 bg-amber-500/10 px-6 py-4 text-amber-300">
+                    Seller is setting up payouts. This item will be available soon.
+                  </div>
+                )}
+              </div>
+
               <div className="mt-8 grid gap-4 sm:grid-cols-2">
                 <div className="rounded-[24px] border border-white/10 bg-white/5 p-5">
                   <p className="text-sm text-slate-400">Player</p>
@@ -181,17 +204,6 @@ export default async function ShopItemPage({
                 >
                   Sell a Similar Item
                 </Link>
-              </div>
-
-              <div className="mt-8 rounded-[24px] border border-white/10 bg-white/5 p-6">
-                <h2 className="text-xl font-semibold text-white">
-                  Buyer Notes
-                </h2>
-                <p className="mt-3 leading-7 text-slate-300">
-                  Interested in this item? Use the inquiry button above and we
-                  can answer questions about availability, condition, shipping,
-                  and next steps.
-                </p>
               </div>
             </div>
           </div>

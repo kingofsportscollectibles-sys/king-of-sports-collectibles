@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { blogPosts } from "@/lib/blog";
 
 type Item = {
   id: string;
@@ -53,12 +52,7 @@ export default function HomePageClient({
     {
       title: "Direct Sales",
       description:
-        "Browse featured collectibles and memorabilia available for purchase directly through King of Sports Collectibles.",
-    },
-    {
-      title: "Custom Framing",
-      description:
-        "Preserve and display your prized signed jerseys, photos, and memorabilia with clean custom framing options.",
+        "We help collectors move quality items through featured listings and direct buyer interest.",
     },
   ];
 
@@ -107,17 +101,17 @@ export default function HomePageClient({
           <div className="grid items-center gap-12 lg:grid-cols-2">
             <div>
               <div className="mb-5 inline-flex rounded-full border border-blue-400/20 bg-blue-500/10 px-4 py-1 text-sm font-medium text-blue-300">
-                Buy • Sell • Appraise
+                Appraisals • Consignment • Collectibles
               </div>
 
               <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
-                The modern home for sports collectibles and memorabilia
+                Sports collectible appraisals and consignment built for serious collectors
               </h1>
 
               <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300">
-                King of Sports Collectibles helps collectors buy, sell,
-            appraise, and preserve valuable sports memorabilia with
-                confidence.
+                King of Sports Collectibles helps collectors understand what
+                their items are worth, explore consignment options, and move
+                valuable memorabilia with confidence.
               </p>
 
               <div className="mt-8 flex flex-wrap gap-4">
@@ -128,10 +122,10 @@ export default function HomePageClient({
                   Get Item Appraised
                 </a>
                 <a
-                  href="#featured-items"
+                  href="#consignment-section"
                   className="rounded-2xl border border-white/15 bg-white/5 px-6 py-3 font-semibold text-white transition hover:bg-white/10"
                 >
-                  Shop Featured Items
+                  Explore Consignment
                 </a>
               </div>
 
@@ -153,16 +147,16 @@ export default function HomePageClient({
                 <div className="mb-6 flex items-center justify-between">
                   <div>
                     <p className="text-sm uppercase tracking-[0.2em] text-slate-400">
-                      Marketplace Preview
+                      Featured Collectible
                     </p>
                     <h2 className="mt-2 text-2xl font-semibold">
-                      Featured Listing
+                      Recent Spotlight
                     </h2>
                   </div>
 
                   {heroItem && (
                     <span className="rounded-full border border-emerald-400/20 bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-300">
-                      Available
+                      Featured
                     </span>
                   )}
                 </div>
@@ -178,7 +172,7 @@ export default function HomePageClient({
                     />
                   ) : (
                     <div className="mx-auto flex h-52 w-full max-w-md items-center justify-center rounded-2xl border border-white/10 bg-gradient-to-br from-slate-800 to-slate-900 text-slate-400">
-                      Item Image Placeholder
+                      Featured Item Preview
                     </div>
                   )}
 
@@ -191,7 +185,7 @@ export default function HomePageClient({
                       ? heroItem.description.length > 110
                         ? `${heroItem.description.slice(0, 110)}...`
                         : heroItem.description
-                      : "Browse our latest featured sports collectibles and memorabilia."}
+                      : "Examples of featured sports collectibles and memorabilia can be highlighted here as social proof."}
                   </p>
 
                   {heroItem && (
@@ -210,15 +204,15 @@ export default function HomePageClient({
                       href={`/shop/${heroItem.slug}`}
                       className="mt-6 inline-block rounded-2xl bg-blue-500 px-6 py-3 font-semibold text-white transition hover:bg-blue-400"
                     >
-                      View Listing
+                      View Item
                     </Link>
                   ) : (
-                    <Link
-                      href="/shop"
+                    <a
+                      href="#lead-form"
                       className="mt-6 inline-block rounded-2xl bg-blue-500 px-6 py-3 font-semibold text-white transition hover:bg-blue-400"
                     >
-                      Visit Shop
-                    </Link>
+                      Start With an Appraisal
+                    </a>
                   )}
                 </div>
               </div>
@@ -240,8 +234,8 @@ export default function HomePageClient({
           </h2>
           <p className="mt-4 text-lg text-slate-300">
             From quick appraisal requests to full-service consignment and direct
-            sales support, the site is built to serve buyers, sellers, and
-            collectors.
+            sales support, the business is built to help collectors make smart
+            next moves.
           </p>
         </div>
 
@@ -267,17 +261,17 @@ export default function HomePageClient({
           <div className="grid gap-10 lg:grid-cols-2">
             <div>
               <p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-300">
-                How It Works
+                Appraisal Process
               </p>
               <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
-                A simple path from item question to next move
+                Get a clearer idea of what your collectible may be worth
               </h2>
 
               <div className="mt-8 space-y-4">
                 {[
-                  "Submit photos and details of your sports card or memorabilia.",
-                  "We review the item, market demand, comps, and sale potential.",
-                  "You decide whether to appraise, sell, consign, frame, or hold.",
+                  "Submit photos and key details about your card, autograph, jersey, helmet, ball, or memorabilia item.",
+                  "We review condition, authentication, comparable sales, and overall market demand.",
+                  "You receive guidance on estimated value and the best next step, whether that is hold, consign, or sell.",
                 ].map((step, index) => (
                   <div
                     key={step}
@@ -290,48 +284,62 @@ export default function HomePageClient({
                   </div>
                 ))}
               </div>
+
+              <a
+                href="#lead-form"
+                className="mt-8 inline-block rounded-2xl bg-blue-500 px-6 py-3 font-semibold text-white transition hover:bg-blue-400"
+              >
+                Request an Appraisal
+              </a>
             </div>
 
-            <div>
+            <div id="consignment-section">
               <p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-300">
-                Why Collectors Work With Us
+                Consignment Process
               </p>
               <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
-                A cleaner, simpler way to buy, sell, and appraise collectibles
+                Turn valuable items into serious buyer interest
               </h2>
               <p className="mt-4 text-lg text-slate-300">
-                We focus on helping collectors understand what they have,
-                explore selling options, and shop quality memorabilia through a
-                trusted, easy-to-use experience.
+                If you have quality memorabilia or cards and want help selling,
+                consignment gives you a cleaner path than handling everything
+                yourself.
               </p>
 
               <div className="mt-8 rounded-[24px] border border-white/10 bg-slate-950 p-6">
                 <div className="grid gap-4 sm:grid-cols-3">
                   <div className="rounded-2xl border border-white/10 bg-slate-900 p-4">
-                    <p className="text-sm text-slate-400">Focused On</p>
+                    <p className="text-sm text-slate-400">Best For</p>
                     <p className="mt-1 text-xl font-semibold text-white">
-                      Appraisals
+                      Valuable Items
                     </p>
                   </div>
                   <div className="rounded-2xl border border-white/10 bg-slate-900 p-4">
-                    <p className="text-sm text-slate-400">Built For</p>
+                    <p className="text-sm text-slate-400">Goal</p>
                     <p className="mt-1 text-xl font-semibold text-white">
-                      Collectors
+                      Better Exposure
                     </p>
                   </div>
                   <div className="rounded-2xl border border-white/10 bg-slate-900 p-4">
-                    <p className="text-sm text-slate-400">Designed To</p>
+                    <p className="text-sm text-slate-400">Focus</p>
                     <p className="mt-1 text-xl font-semibold text-white">
-                      Build Trust
+                      Serious Buyers
                     </p>
                   </div>
                 </div>
 
                 <ul className="mt-6 space-y-4 text-slate-200">
-                  <li>• Market-based appraisals and selling guidance</li>
-                  <li>• Quality featured listings and memorabilia sales</li>
-                  <li>• Consignment support for valuable items</li>
+                  <li>• We help review the item and selling potential</li>
+                  <li>• We identify the best path to market the piece</li>
+                  <li>• We help turn interest into a sale-focused process</li>
                 </ul>
+
+                <a
+                  href="#lead-form"
+                  className="mt-8 inline-block rounded-2xl border border-white/15 bg-white/5 px-6 py-3 font-semibold text-white transition hover:bg-white/10"
+                >
+                  Ask About Consignment
+                </a>
               </div>
             </div>
           </div>
@@ -345,10 +353,10 @@ export default function HomePageClient({
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div className="max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-300">
-              Featured Listings
+              Featured Items
             </p>
             <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
-              A preview of what buyers can shop directly on the site
+              Showcase a few standout collectibles as proof of quality
             </h2>
           </div>
           <a
@@ -412,21 +420,21 @@ export default function HomePageClient({
           <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
             <div>
               <p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-300">
-                For Sellers & Collectors
+                Appraisal or Consignment
               </p>
               <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
-                Whether you want to sell or just know the value of what you have,
-                we can help
+                Start with the service that fits your goal
               </h2>
               <p className="mt-4 text-lg text-slate-300">
-                The goal is simple: make it easier for collectors to understand
-                their items, unlock value, and connect with the right buyers.
+                Some collectors just want to know what they have. Others are
+                ready to move a valuable item. This form helps us point you in
+                the right direction quickly.
               </p>
 
               <ul className="mt-8 space-y-4 text-slate-200">
-                <li>• Market-based appraisals</li>
-                <li>• Consignment options for valuable items</li>
-                <li>• Direct website listings and sales</li>
+                <li>• Choose appraisal if you want market-based guidance</li>
+                <li>• Choose consignment if you want help selling</li>
+                <li>• Add details so we can respond more effectively</li>
               </ul>
             </div>
 
@@ -438,8 +446,7 @@ export default function HomePageClient({
                 Get started with your item
               </h3>
               <p className="mt-2 text-slate-400">
-                Tell us a little about your item and we’ll help point you in the
-                right direction.
+                Tell us whether you need an appraisal or consignment help and we’ll follow up with the right next step.
               </p>
 
               {status === "success" && (
@@ -491,18 +498,23 @@ export default function HomePageClient({
                   className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white focus:border-blue-400 focus:outline-none"
                 >
                   <option value="" disabled className="bg-slate-900">
-                    Service Needed
+                    Select Service Needed
                   </option>
-                  <option className="bg-slate-900">Appraisal</option>
-                  <option className="bg-slate-900">Consignment</option>
-                  <option className="bg-slate-900">Sell My Item</option>
-                  <option className="bg-slate-900">Custom Framing</option>
+                  <option value="Appraisal" className="bg-slate-900">
+                    Appraisal
+                  </option>
+                  <option value="Consignment" className="bg-slate-900">
+                    Consignment
+                  </option>
+                  <option value="Sell My Item" className="bg-slate-900">
+                    Sell My Item
+                  </option>
                 </select>
 
                 <textarea
                   name="details"
                   rows={5}
-                  placeholder="Tell us about your item..."
+                  placeholder="Tell us about your item, player, condition, authentication, and what you are hoping to do with it..."
                   required
                   className="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-slate-500 focus:border-blue-400 focus:outline-none"
                 />
@@ -517,61 +529,6 @@ export default function HomePageClient({
               </form>
             </div>
           </div>
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-7xl px-6 py-20 md:px-10 lg:px-12">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-          <div className="max-w-2xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-300">
-              Blog & Insights
-            </p>
-            <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
-              Learn how to value, sell, and understand your collectibles
-            </h2>
-            <p className="mt-4 text-lg text-slate-300">
-              Articles designed to help collectors make smarter decisions and
-              understand what their items are worth.
-            </p>
-          </div>
-
-          <Link
-            href="/blog"
-            className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 font-semibold text-white transition hover:bg-white/10"
-          >
-            View All Articles
-          </Link>
-        </div>
-
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
-          {blogPosts.slice(0, 3).map((post) => (
-            <article
-              key={post.slug}
-              className="rounded-[24px] border border-white/10 bg-white/5 p-6 transition hover:-translate-y-1 hover:bg-white/[0.07]"
-            >
-              <div className="flex items-center justify-between">
-                <span className="rounded-full border border-blue-400/20 bg-blue-500/10 px-3 py-1 text-xs font-medium text-blue-300">
-                  {post.category}
-                </span>
-                <span className="text-sm text-slate-400">
-                  {post.publishedAt}
-                </span>
-              </div>
-
-              <h3 className="mt-4 text-xl font-semibold text-white">
-                {post.title}
-              </h3>
-
-              <p className="mt-3 leading-7 text-slate-300">{post.excerpt}</p>
-
-              <Link
-                href={`/blog/${post.slug}`}
-                className="mt-5 inline-block font-semibold text-blue-300 transition hover:text-blue-200"
-              >
-                Read More →
-              </Link>
-            </article>
-          ))}
         </div>
       </section>
 
@@ -593,12 +550,6 @@ export default function HomePageClient({
               </Link>
               <Link href="/services" className="transition hover:text-white">
                 Services
-              </Link>
-              <Link href="/shop" className="transition hover:text-white">
-                Shop
-              </Link>
-              <Link href="/blog" className="transition hover:text-white">
-                Blog
               </Link>
               <Link href="/contact" className="transition hover:text-white">
                 Contact

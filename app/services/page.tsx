@@ -30,16 +30,6 @@ const services = [
     ],
   },
   {
-    title: "Custom Framing",
-    description:
-      "Preserve and display your signed jerseys, photos, and memorabilia with custom framing options built to protect presentation and value.",
-    highlights: [
-      "Display-focused solutions",
-      "Built for prized collector pieces",
-      "Great for gifts, offices, and sports rooms",
-    ],
-  },
-  {
     title: "Collection Reviews",
     description:
       "Not sure what your collection is worth or where to start? We help you identify value, priority items, and next-step opportunities.",
@@ -144,7 +134,7 @@ export default function ServicesPage() {
                   <div className="rounded-2xl border border-white/10 bg-slate-950 p-5">
                     <p className="text-sm text-slate-400">Core Focus</p>
                     <p className="mt-2 text-lg font-semibold text-white">
-                      Appraisals, consignment, direct sales, framing, and market
+                      Appraisals, consignment, direct sales, and market
                       insights
                     </p>
                   </div>
