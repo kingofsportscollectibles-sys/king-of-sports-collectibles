@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 
 type DashboardItem = {
@@ -71,7 +71,6 @@ function getStatusBadgeClasses(status: string) {
 
 export default function DashboardPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   const [authLoading, setAuthLoading] = useState(true);
   const [userId, setUserId] = useState<string | null>(null);
@@ -254,12 +253,17 @@ export default function DashboardPage() {
   useEffect(() => {
     loadDashboard();
 
-    const stripeState = searchParams.get("stripe");
-    if (stripeState === "return") {
-      setActionMessage("Returned from Stripe. Refreshing payout status...");
-    }
-    if (stripeState === "refresh") {
-      setActionMessage("Please complete payout setup to continue.");
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const stripeState = params.get("stripe");
+
+      if (stripeState === "return") {
+        setActionMessage("Returned from Stripe. Refreshing payout status...");
+      }
+
+      if (stripeState === "refresh") {
+        setActionMessage("Please complete payout setup to continue.");
+      }
     }
 
     const {
@@ -271,7 +275,7 @@ export default function DashboardPage() {
     return () => {
       subscription.unsubscribe();
     };
-  }, [router, searchParams]);
+  }, [router]);
 
   const stats = useMemo(() => {
     return {
