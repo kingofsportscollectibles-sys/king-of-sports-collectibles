@@ -2,31 +2,6 @@ import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { createClient } from "@supabase/supabase-js";
 
-if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
-  throw new Error("Missing NEXT_PUBLIC_SUPABASE_URL");
-}
-
-if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
-  throw new Error("Missing SUPABASE_SERVICE_ROLE_KEY");
-}
-
-if (!process.env.STRIPE_SECRET_KEY) {
-  throw new Error("Missing STRIPE_SECRET_KEY");
-}
-
-if (!process.env.NEXT_PUBLIC_APP_URL) {
-  throw new Error("Missing NEXT_PUBLIC_APP_URL");
-}
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2026-03-25.dahlia",
-});
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
-
 const PLATFORM_FEE_PERCENT = 0.08; // 8%
 
 type CheckoutRequestBody = {
@@ -43,6 +18,43 @@ type SellerProfile = {
 
 export async function POST(req: Request) {
   try {
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
+      return NextResponse.json(
+        { error: "Missing NEXT_PUBLIC_SUPABASE_URL" },
+        { status: 500 }
+      );
+    }
+
+    if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      return NextResponse.json(
+        { error: "Missing SUPABASE_SERVICE_ROLE_KEY" },
+        { status: 500 }
+      );
+    }
+
+    if (!process.env.STRIPE_SECRET_KEY) {
+      return NextResponse.json(
+        { error: "Missing STRIPE_SECRET_KEY" },
+        { status: 500 }
+      );
+    }
+
+    if (!process.env.NEXT_PUBLIC_APP_URL) {
+      return NextResponse.json(
+        { error: "Missing NEXT_PUBLIC_APP_URL" },
+        { status: 500 }
+      );
+    }
+
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+      apiVersion: "2026-03-25.dahlia",
+    });
+
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
+
     const body = (await req.json()) as CheckoutRequestBody;
     const itemId = body.itemId;
 
@@ -77,14 +89,19 @@ export async function POST(req: Request) {
 
     if (itemError) {
       console.error("Item fetch error:", itemError);
-      return NextResponse.json({ error: "Unable to load item" }, { status: 500 });
+      return NextResponse.json(
+        { error: "Unable to load item" },
+        { status: 500 }
+      );
     }
 
     if (!item) {
       return NextResponse.json({ error: "Item not found" }, { status: 404 });
     }
 
-    const seller = (Array.isArray(item.profiles) ? item.profiles[0] : item.profiles) as SellerProfile;
+    const seller = (
+      Array.isArray(item.profiles) ? item.profiles[0] : item.profiles
+    ) as SellerProfile;
 
     if (
       !seller?.stripe_account_id ||
@@ -99,6 +116,7 @@ export async function POST(req: Request) {
     }
 
     const unitAmount = Math.round(Number(item.price) * 100);
+
     if (!unitAmount || unitAmount < 50) {
       return NextResponse.json(
         { error: "Invalid item price for checkout" },
