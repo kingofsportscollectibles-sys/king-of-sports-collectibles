@@ -554,6 +554,12 @@ export default function HomePageClient({
               <Link href="/contact" className="transition hover:text-white">
                 Contact
               </Link>
+              <Link href="/terms" className="transition hover:text-white">
+  Terms of Service
+</Link>
+<Link href="/privacy" className="transition hover:text-white">
+  Privacy Policy
+</Link>
             </div>
           </div>
         </div>
